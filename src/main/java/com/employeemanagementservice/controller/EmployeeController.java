@@ -40,6 +40,14 @@ public class EmployeeController {
         return "redirect:/employees";
     }
 
+    @PostMapping("/update")
+    public String update(@ModelAttribute Employee employee) {
+        //employee.setId(id);
+        System.out.println(employee);
+        employeeService.updateEmployee(employee);
+        return "redirect:/employees/emplist";
+    }
+
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         employeeService.deleteById(id);
