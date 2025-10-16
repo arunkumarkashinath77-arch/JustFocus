@@ -4,186 +4,210 @@
   <meta charset="UTF-8">
   <title>Employee List</title>
   <style>
-    /* === GLOBAL RESET === */
+    /* RESET */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      font-family: "Segoe UI", sans-serif;
     }
 
     body {
       background-color: #f5f9ff;
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
+      min-height: 100vh;
     }
 
-    /* === HEADER === */
+    /* HEADER */
     header {
-      width: 100%;
       background: linear-gradient(90deg, #1a73e8, #64b5f6);
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 16px 50px;
       box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
     .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #ffffff;
-      letter-spacing: 1px;
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #fff;
+      letter-spacing: 0.5px;
     }
 
+    /* NAV LINKS */
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 12px;
     }
 
-    .nav-links a {
-      color: #ffffff;
+    .nav-links a, .logout-btn {
+      color: #fff;
       text-decoration: none;
       font-weight: 500;
-      padding: 8px 18px;
-      border-radius: 25px;
+      padding: 8px 16px;
+      border-radius: 8px;
       background: rgba(255, 255, 255, 0.15);
-      transition: all 0.3s ease-in-out;
+      transition: 0.3s ease;
+      border: none;
     }
 
-    .nav-links a:hover {
-      background-color: #ffffff;
-      color: #1a73e8;
-      transform: translateY(-2px);
+    .nav-links a:hover, .logout-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: scale(1.05);
     }
 
     .logout-btn {
       background-color: #e53935;
-      color: #fff;
-      border: none;
-      padding: 8px 18px;
-      border-radius: 25px;
-      font-size: 14px;
-      font-weight: 600;
       cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
     }
 
-    .logout-btn:hover {
-      background-color: #c62828;
-      transform: scale(1.05);
-    }
-
-    /* === TITLE === */
+    /* TITLE */
     h2 {
       text-align: center;
+      margin-top: 40px;
       color: #1a73e8;
-      margin-top: 50px;
-      font-size: 2rem;
-      letter-spacing: 0.5px;
+      font-size: 1.8rem;
+      font-weight: 700;
     }
 
-    /* === TABLE CONTAINER === */
-    .table-wrapper {
-      width: 90%;
-      max-width: 1100px;
-      margin: 40px auto;
-      background: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-      overflow: hidden;
-      animation: fadeIn 0.6s ease-in-out;
-    }
-
-    /* === TABLE === */
+    /* TABLE */
     table {
-      width: 100%;
+      width: 90%;
+      margin: 30px auto;
       border-collapse: collapse;
-      text-align: center;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     }
 
-    thead {
-      background: linear-gradient(90deg, #bbdefb, #e3f2fd);
+    th, td {
+      text-align: center;
+      padding: 14px;
+      border-top: 1px solid #eee;
     }
 
     th {
-      padding: 16px;
-      font-size: 1rem;
-      color: #0b5ed7;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    td {
-      padding: 14px;
+      background: #e3f2fd;
       color: #333;
-      font-size: 0.95rem;
-      border-top: 1px solid #eef5ff;
+      font-weight: 600;
     }
 
-    tr:nth-child(even) {
-      background-color: #f9fbff;
-    }
-
-    tr:hover {
-      background-color: #e8f1ff;
-      transition: background 0.2s ease-in-out;
-    }
-
-    /* === ACTION BUTTONS === */
+    /* ACTION BUTTONS */
     .action-btn {
-      display: inline-block;
-      border: none;
       background: #1a73e8;
       color: #fff;
-      padding: 6px 14px;
-      border-radius: 8px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: none;
       cursor: pointer;
-      transition: all 0.3s ease-in-out;
-      text-decoration: none;
-      font-size: 0.9rem;
+      margin: 0 3px;
+      transition: transform 0.2s ease, opacity 0.2s ease;
     }
 
     .action-btn:hover {
-      background: #0b5ed7;
-      transform: translateY(-2px);
+      transform: scale(1.05);
+      opacity: 0.9;
     }
 
     .delete-btn {
       background: #e53935;
     }
 
-    .delete-btn:hover {
-      background: #c62828;
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
     }
 
-    /* === ANIMATION === */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .modal-content {
+      background: #fff;
+      width: 400px;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
     }
 
-    /* === FOOTER === */
+    .modal-content h3 {
+      text-align: center;
+      color: #1a73e8;
+    }
+
+    .modal-content input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .modal-content button {
+      margin-top: 15px;
+      padding: 10px;
+      width: 48%;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .save-btn {
+      background: #1a73e8;
+      color: white;
+    }
+
+    .cancel-btn {
+      background: #e53935;
+      color: white;
+    }
+
+    /* FOOTER */
     footer {
-      margin-top: auto;
-      background: #e3f2fd;
       text-align: center;
       padding: 14px;
-      font-size: 0.9rem;
-      color: #666;
-      border-top: 1px solid #cfd8dc;
+      background: #1a73e8;
+      color: white;
+      margin-top: auto;
+      font-size: 0.95rem;
+      box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+        padding: 16px 20px;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      table {
+        width: 100%;
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
-
 <body>
 
 <!-- HEADER -->
@@ -192,24 +216,20 @@
   <div class="nav-links">
     <a th:href="@{/employees}">Dashboard</a>
     <a th:href="@{/employees/add}">Add Employee</a>
-    <form th:action="@{/logout}" method="post" style="display: inline;">
+    <form th:action="@{/logout}" method="post" style="display:inline;">
       <button type="submit" class="logout-btn">Logout</button>
     </form>
   </div>
 </header>
 
 <!-- MAIN CONTENT -->
-<h2>All Employees</h2>
+<main>
+  <h2>All Employees</h2>
 
-<div class="table-wrapper">
   <table>
     <thead>
     <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Department</th>
-      <th>Action</th>
+      <th>ID</th><th>Name</th><th>Email</th><th>Department</th><th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -219,17 +239,58 @@
       <td th:text="${employee.email}"></td>
       <td th:text="${employee.department}"></td>
       <td>
+        <button class="action-btn"
+                th:attr="data-id=${employee.id},data-name=${employee.name},data-email=${employee.email},data-dept=${employee.department}"
+                onclick="openEditModal(this)">Update</button>
         <a th:href="@{'/employees/delete/' + ${employee.id}}" class="action-btn delete-btn">Delete</a>
       </td>
     </tr>
     </tbody>
   </table>
+</main>
+
+<!-- EDIT MODAL -->
+<div id="editModal" class="modal">
+  <div class="modal-content">
+    <h3>Edit Employee</h3>
+    <form id="editForm" th:action="@{/employees/update}" th:object="${employee}" method="post">
+      <input type="hidden" id="editId" name="id">
+      <input type="text" id="editName" name="name" placeholder="Employee Name" required>
+      <input type="email" id="editEmail" name="email" placeholder="Email" required>
+      <input type="text" id="editDept" name="department" placeholder="Department" required>
+      <div style="display:flex;justify-content:space-between;">
+        <button type="submit" class="save-btn">Save</button>
+        <button type="button" class="cancel-btn" onclick="closeEditModal()">Cancel</button>
+      </div>
+    </form>
+  </div>
 </div>
 
 <!-- FOOTER -->
 <footer>
-  © 2025 Employee Management System | Designed with ❤️ by 5th Sem AI/ML and IS Students
+  © 2025 Employee Management System | Designed with ❤️ by Students
 </footer>
+
+<script>
+  function openEditModal(button) {
+    const modal = document.getElementById("editModal");
+    modal.style.display = "block";
+
+    document.getElementById("editId").value = button.getAttribute("data-id");
+    document.getElementById("editName").value = button.getAttribute("data-name");
+    document.getElementById("editEmail").value = button.getAttribute("data-email");
+    document.getElementById("editDept").value = button.getAttribute("data-dept");
+  }
+
+  function closeEditModal() {
+    document.getElementById("editModal").style.display = "none";
+  }
+
+  window.onclick = function(e) {
+    const modal = document.getElementById("editModal");
+    if (e.target === modal) closeEditModal();
+  }
+</script>
 
 </body>
 </html>
