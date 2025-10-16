@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Dashboard</title>
+    <style>
+        /* GLOBAL RESET */
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+          font-family: "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        body {
+          background: linear-gradient(135deg, #e3f2fd, #f9fbff);
+          min-height: 100vh;
+        }
+
+        /* HEADER */
+        header {
+          width: 100%;
+          background: linear-gradient(90deg, #1a73e8, #42a5f5);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 14px 40px;
+          box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+          color: white;
+          position: sticky;
+          top: 0;
+          z-index: 100;
+        }
+
+        .logo {
+          font-size: 1.6rem;
+          font-weight: 700;
+          letter-spacing: 0.5px;
+        }
+
+        /* SCROLLABLE MENU */
+        .scroll-menu {
+          display: flex;
+          align-items: center;
+          overflow-x: auto;
+          white-space: nowrap;
+          gap: 12px;
+          margin: 0 30px;
+          scrollbar-width: thin;
+          scrollbar-color: #bbdefb transparent;
+          flex-grow: 1;
+          justify-content: center;
+        }
+
+        .scroll-menu::-webkit-scrollbar {
+          height: 6px;
+        }
+
+        .scroll-menu::-webkit-scrollbar-thumb {
+          background-color: #bbdefb;
+          border-radius: 10px;
+        }
+
+        .scroll-item {
+          text-decoration: none;
+          color: #fff;
+          border: 1px solid rgba(255, 255, 255, 0.6);
+          padding: 6px 14px;
+          border-radius: 8px;
+          transition: all 0.2s ease-in-out;
+          font-weight: 500;
+          backdrop-filter: blur(3px);
+        }
+
+        .scroll-item:hover {
+          background-color: rgba(255, 255, 255, 0.2);
+          transform: scale(1.05);
+        }
+
+        /* LOGOUT BUTTON */
+        .logout-btn {
+          background-color: #e53935;
+          color: #fff;
+          border: none;
+          padding: 8px 16px;
+          border-radius: 8px;
+          font-size: 14px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .logout-btn:hover {
+          background-color: #c62828;
+          transform: scale(1.05);
+        }
+
+        /* DASHBOARD SECTION */
+        .dashboard-section {
+          text-align: center;
+          margin-top: 80px;
+        }
+
+        .dashboard-title {
+          font-size: 2rem;
+          font-weight: 700;
+          color: #1a73e8;
+          margin-bottom: 40px;
+        }
+
+        /* CARD GRID */
+        .card-container {
+          display: flex;
+          justify-content: center;
+          gap: 40px;
+          flex-wrap: wrap;
+          padding: 0 20px;
+        }
+
+        .card {
+          background-color: #fff;
+          border-radius: 16px;
+          padding: 50px 40px;
+          width: 260px;
+          text-align: center;
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          border: 1px solid #e3f2fd;
+        }
+
+        .card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 14px 30px rgba(26, 115, 232, 0.15);
+        }
+
+        .card a {
+          text-decoration: none;
+          color: #1a73e8;
+          font-size: 1.3rem;
+          font-weight: 600;
+          display: inline-block;
+          transition: color 0.2s;
+        }
+
+        .card a:hover {
+          color: #0b5ed7;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+          header {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+          .scroll-menu {
+            margin: 10px 0;
+            justify-content: flex-start;
+          }
+          .card-container {
+            gap: 25px;
+          }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+    <div class="logo">Employee Dashboard</div>
+
+    <form th:action="@{/logout}" method="post" style="display: inline;">
+        <button type="submit" class="logout-btn">Logout</button>
+    </form>
+</header>
+
+<!-- MAIN CONTENT -->
+<section class="dashboard-section">
+    <h1 class="dashboard-title">Welcome to Your Employee Dashboard</h1>
+
+    <div class="card-container">
+        <div class="card">
+            <a th:href="@{/employees/emplist}">View Employees</a>
+        </div>
+        <div class="card">
+            <a th:href="@{/employees/add}">Add Employee</a>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

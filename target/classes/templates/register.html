@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <style>
+    /* Global Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #bbdefb, #e3f2fd, #f0f7ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* Background glow shapes */
+    .background-shape {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.4;
+      filter: blur(70px);
+      z-index: 0;
+    }
+
+    .shape1 {
+      background: #64b5f6;
+      width: 280px;
+      height: 280px;
+      top: -70px;
+      left: -100px;
+    }
+
+    .shape2 {
+      background: #1a73e8;
+      width: 250px;
+      height: 250px;
+      bottom: -80px;
+      right: -70px;
+    }
+
+    /* Register Card */
+    .register-container {
+      position: relative;
+      z-index: 1;
+      background: #ffffff;
+      padding: 50px 40px;
+      width: 380px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    h2 {
+      color: #1a73e8;
+      font-size: 1.8rem;
+      margin-bottom: 25px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    form {
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 18px;
+      font-weight: 500;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #cde1ff;
+      border-radius: 10px;
+      background-color: #f8fbff;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.25s ease;
+    }
+
+    input:focus {
+      border-color: #1a73e8;
+      box-shadow: 0 0 6px rgba(26, 115, 232, 0.3);
+    }
+
+    button {
+      width: 100%;
+      background: linear-gradient(90deg, #1a73e8, #42a5f5);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      padding: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 4px 10px rgba(26, 115, 232, 0.2);
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #0b5ed7, #1e88e5);
+      transform: scale(1.03);
+      box-shadow: 0 6px 18px rgba(26, 115, 232, 0.25);
+    }
+
+    p {
+      margin-top: 18px;
+      color: #333;
+      font-size: 14px;
+    }
+
+    a {
+      color: #1a73e8;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    a:hover {
+      color: #0b5ed7;
+      text-decoration: underline;
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .register-container {
+        width: 90%;
+        padding: 40px 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Decorative Background -->
+<div class="background-shape shape1"></div>
+<div class="background-shape shape2"></div>
+
+<!-- Register Card -->
+<div class="register-container">
+  <h2>Create an Account</h2>
+
+  <form th:action="@{/register}" th:object="${user}" method="post">
+    <label>
+      Username:
+      <input type="text" th:field="*{username}" placeholder="Enter username" required />
+    </label>
+
+    <label>
+      Password:
+      <input type="password" th:field="*{password}" placeholder="Enter password" required />
+    </label>
+
+    <button type="submit">Register</button>
+  </form>
+
+  <p>Already have an account? <a th:href="@{/login}">Login</a></p>
+</div>
+
+</body>
+</html>

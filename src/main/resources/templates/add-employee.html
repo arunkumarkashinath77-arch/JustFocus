@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Employee</title>
+  <style>
+    /* Global Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #bbdefb, #e3f2fd, #f0f7ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Background Decorative Blobs */
+    .background-shape {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.4;
+      filter: blur(80px);
+      z-index: 0;
+    }
+
+    .shape1 {
+      background: #64b5f6;
+      width: 260px;
+      height: 260px;
+      top: -60px;
+      left: -80px;
+    }
+
+    .shape2 {
+      background: #1a73e8;
+      width: 240px;
+      height: 240px;
+      bottom: -70px;
+      right: -60px;
+    }
+
+    /* Add Employee Card */
+    .form-container {
+      position: relative;
+      z-index: 1;
+      background: #ffffff;
+      padding: 50px 45px;
+      width: 400px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    h2 {
+      color: #1a73e8;
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    form {
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 16px;
+      font-weight: 500;
+      color: #333;
+      font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #cde1ff;
+      border-radius: 10px;
+      background-color: #f8fbff;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.25s ease;
+    }
+
+    input:focus {
+      border-color: #1a73e8;
+      box-shadow: 0 0 6px rgba(26, 115, 232, 0.3);
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      background: linear-gradient(90deg, #1a73e8, #42a5f5);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      padding: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 4px 10px rgba(26, 115, 232, 0.2);
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #0b5ed7, #1e88e5);
+      transform: scale(1.03);
+      box-shadow: 0 6px 18px rgba(26, 115, 232, 0.25);
+    }
+
+    /* Subtle Fade-In Animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 480px) {
+      .form-container {
+        width: 90%;
+        padding: 40px 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Decorative Background -->
+<div class="background-shape shape1"></div>
+<div class="background-shape shape2"></div>
+
+<!-- Add Employee Form -->
+<div class="form-container">
+  <h2>Add Employee</h2>
+
+  <form th:action="@{/employees/add}" th:object="${employee}" method="post">
+    <label>
+      Name:
+      <input type="text" th:field="*{name}" placeholder="Enter full name" required />
+    </label>
+
+    <label>
+      Email:
+      <input type="email" th:field="*{email}" placeholder="Enter email address" required />
+    </label>
+
+    <label>
+      Department:
+      <input type="text" th:field="*{department}" placeholder="Enter department" required />
+    </label>
+
+    <button type="submit">Save Employee</button>
+  </form>
+</div>
+
+</body>
+</html>
